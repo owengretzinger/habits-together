@@ -3,14 +3,22 @@ import { IconCheck, IconEdit, IconX } from "@tabler/icons-react-native";
 import { router, useGlobalSearchParams } from "expo-router";
 import { useAtom, useAtomValue } from "jotai";
 import { Pressable } from "react-native";
+<<<<<<< HEAD
+import { getUserInfoAtom, profileFormDataAtom } from "../atoms/atoms";
+import { currentUserAtom } from "../atoms/currentUserAtom";
+import colors from "../constants/colors";
+import { newUsernameIsUnique, updateProfileDataInDB } from "../firebase/api";
+=======
 import { getUserInfoAtom, removeFriendAtom } from "../atoms/atoms";
 import colors from "../constants/colors";
 import { HabitIdT, UserIdT } from "../lib/db_types";
+>>>>>>> main
 import DotsMenu from "./DotsMenu";
 import HeaderBackButton from "./HeaderBackButton";
 import Icon from "./Icon";
 import RoundedButton from "./RoundedButton";
 import { Text, View } from "./Themed";
+import { userT, userWithIdT } from "../lib/db_types";
 
 function sharedOptions(colorScheme: string): NativeStackNavigationOptions {
   return {
@@ -194,12 +202,23 @@ export function forgotPasswordOptions(
 export function editProfileOptions(
   colorScheme: string,
 ): NativeStackNavigationOptions {
+<<<<<<< HEAD
+  const { userName } = useGlobalSearchParams<{ userName: string }>();
+  const [profileFormData, setProfileFormData] = useAtom(profileFormDataAtom);
+  const [userData, setUserData] = useAtom(currentUserAtom);
+=======
+>>>>>>> main
   return {
     headerLeft: () => (
       <RoundedButton
         text="Cancel"
         icon={IconX}
         onPress={() => {
+          //change back to actual profile data
+          setProfileFormData({
+            displayName: userData.displayName,
+            username: userData.displayName,
+          });
           router.back();
         }}
       />
@@ -213,9 +232,32 @@ export function editProfileOptions(
       <RoundedButton
         text="Done"
         icon={IconCheck}
-        onPress={() => {
-          router.back();
-        }}
+        onPress={async () => {
+          const cond = await newUsernameIsUnique(userData.username, profileFormData.username)
+          if (cond) {
+            //on success
+            const newDataForAtom: userWithIdT = {
+              ...userData,
+              ...profileFormData,
+            };
+
+            const newDataForDb: userT = {
+              username: profileFormData.username,
+              displayName: profileFormData.displayName,
+              picture: userData.picture,
+              createdAt: userData.createdAt,
+            };
+
+            await updateProfileDataInDB(userData.id, newDataForDb)
+            setUserData(newDataForAtom); //update atom to match db
+            router.back();
+          }
+          else {
+            profileFormData.username = userData.username // reset their form data 
+            setProfileFormData(profileFormData)
+          }
+        }
+        }
       />
     ),
     headerTitleAlign: "center",

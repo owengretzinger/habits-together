@@ -3,20 +3,20 @@ import { Text, View } from "@/src/components/Themed";
 import DefaultColors from "@/src/constants/DefaultColors";
 import { fetchSingleUserThumbnail } from "@/src/lib/getRandomProfilePics";
 import { IconCirclePlus } from "@tabler/icons-react-native";
+import { useAtom } from "jotai";
 import { useColorScheme } from "nativewind";
 import { useEffect, useRef, useState } from "react";
 import { Image, TextInput, TouchableOpacity } from "react-native";
+import { profileFormDataAtom } from "../atoms/atoms";
 
 export default function ProfileCreationBoxes({
   editPage,
 }: {
   editPage: boolean;
 }) {
+  const [formData, setFormData] = useAtom(profileFormDataAtom);
   const { colorScheme } = useColorScheme();
-  const [displayName, setDisplayName] = useState("");
-  const [username, setUsername] = useState("");
   const [pfp, setPfp] = useState();
-  const [email, setEmail] = useState("");
   const refUsernameInput = useRef<TextInput>(null);
   const refEmailInput = useRef<TextInput>(null);
 
@@ -53,8 +53,10 @@ export default function ProfileCreationBoxes({
           }}
           placeholder="John Doe"
           placeholderTextColor={DefaultColors[colorScheme].placeholder}
-          value={displayName}
-          onChangeText={(text) => setDisplayName(text)}
+          value={formData.displayName}
+          onChangeText={(text) => {
+            setFormData({ ...formData, displayName: text });
+          }}
           onSubmitEditing={() => {
             refUsernameInput.current?.focus();
           }}
@@ -70,15 +72,17 @@ export default function ProfileCreationBoxes({
             color: DefaultColors[colorScheme].text,
           }}
           ref={refUsernameInput}
-          value={username}
-          onChangeText={(text) => setUsername(text)}
+          value={formData.username}
+          onChangeText={(text) => {
+            setFormData({ ...formData, username: text });
+          }}
           onSubmitEditing={() => {
             refEmailInput.current?.focus();
           }}
         ></TextInput>
       </View>
       {/* Email */}
-      {editPage == true && (
+      {/* {editPage == true && (
         <View className="mt-5 flex flex-col">
           <Text className="text-base font-semibold">Email</Text>
           <TextInput
@@ -92,7 +96,7 @@ export default function ProfileCreationBoxes({
             onChangeText={(text) => setEmail(text)}
           ></TextInput>
         </View>
-      )}
+      )} */}
     </View>
   );
 }
