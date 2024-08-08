@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "731859375504",
+    "project_id": "habits-together",
+    "storage_bucket": "habits-together.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731859375504:android:c9669eb9d3ac7ed297cf15",
+        "android_client_info": {
+          "package_name": "com.habittogether.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALyMayEpkPFnicZkZluw0XvZuVKQdnWQY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

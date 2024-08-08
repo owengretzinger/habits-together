@@ -17,6 +17,7 @@
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -36,8 +37,17 @@
     "extra": {
       "router": {
         "origin": false
+      },
+      "eas": {
+        "projectId": "73bf25e3-20c8-4f4f-9b32-17cef96c0740"
       }
     },
-    "jsEngine": "hermes"
+    "jsEngine": "hermes",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/73bf25e3-20c8-4f4f-9b32-17cef96c0740"
+    }
   }
 }
