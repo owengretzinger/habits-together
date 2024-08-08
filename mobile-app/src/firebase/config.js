@@ -1,5 +1,4 @@
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
-import { getDevicePushTokenAsync } from "expo-notifications";
 import { initializeApp } from "firebase/app";
 import { getReactNativePersistence, initializeAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
