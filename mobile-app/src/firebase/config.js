@@ -1,10 +1,8 @@
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
+import { getDevicePushTokenAsync } from "expo-notifications";
 import { initializeApp } from "firebase/app";
-// authentication
 import { getReactNativePersistence, initializeAuth } from "firebase/auth";
-// firestore
 import { getFirestore } from "firebase/firestore";
-// cloud storage
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
@@ -25,3 +23,5 @@ export const auth = initializeAuth(app, {
 });
 export const firestore = getFirestore(app);
 export const storage = getStorage();
+
+// const token = (await getDevicePushTokenAsync()).data;
